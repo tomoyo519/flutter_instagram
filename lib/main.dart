@@ -7,12 +7,17 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:provider/provider.dart';
+import 'notification.dart';
 
 void main() {
-  runApp(MaterialApp(
-      // <style><style> 같은거임
-      theme: theme,
-      home: MyApp()));
+  runApp(ChangeNotifierProvider(
+    create: (c) => Store1(),
+    child: MaterialApp(
+        // <style><style> 같은거임
+        theme: theme,
+        home: MyApp()),
+  ));
 }
 
 var a = TextStyle(backgroundColor: Colors.black, color: Colors.white);
@@ -51,11 +56,17 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     getData();
+    initNotification();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showNotification();
+        },
+      ),
       appBar: AppBar(
         title: Text("Instagram"),
         actions: [
@@ -183,14 +194,30 @@ class Upload extends StatelessWidget {
   }
 }
 
+class Store1 extends ChangeNotifier {
+  var name = 'john kim';
+  changeName() {
+    name = 'john park';
+    notifyListeners();
+  }
+}
+
 class Profile extends StatelessWidget {
   const Profile({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: Text('프로필 페이지'),
+      appBar: AppBar(title: Text(context.watch<Store1>().name)),
+      body: Column(
+        children: [
+          ElevatedButton(
+              onPressed: () {
+                context.read<Store1>().changeName();
+              },
+              child: Text('버튼'))
+        ],
+      ),
     );
   }
 }
