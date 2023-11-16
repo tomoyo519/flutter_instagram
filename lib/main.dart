@@ -61,12 +61,12 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    MediaQuery.of(context).size.width;
+
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showNotification();
-        },
-      ),
+      floatingActionButton: FloatingActionButton(onPressed: () {
+        showNotification();
+      }),
       appBar: AppBar(
         title: Text("Instagram"),
         actions: [
