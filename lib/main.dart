@@ -9,8 +9,15 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
 import 'notification.dart';
+import './shop.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(ChangeNotifierProvider(
     create: (c) => Store1(),
     child: MaterialApp(
@@ -90,7 +97,7 @@ class _MyAppState extends State<MyApp> {
           )
         ],
       ),
-      body: [MyPost(data: data), Text('샵페이지')][tab],
+      body: [MyPost(data: data), Shop()][tab],
       bottomNavigationBar: BottomNavigationBar(
           showSelectedLabels: false,
           showUnselectedLabels: false,
