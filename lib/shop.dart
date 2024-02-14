@@ -12,9 +12,16 @@ class Shop extends StatefulWidget {
 
 class _ShopState extends State<Shop> {
   getData() async {
-    var result =
-        await firestore.collection('product').doc('0rY8mjBT7mZ1gwFUP35Q').get();
-    print(result['price']);
+    // 외외처리!
+    try {
+      var result = await firestore
+          .collection('product')
+          .doc('0rY8mjBT7mZ1gwFUP35Q')
+          .get();
+      print(result['price']);
+    } catch (e) {
+      print(e);
+    }
   }
 
   @override
